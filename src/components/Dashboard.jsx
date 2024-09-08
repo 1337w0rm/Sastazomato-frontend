@@ -2,13 +2,15 @@ import ProductsContainer from './Products';
 import Search from './Search';
 import { useEffect, useState } from 'react';
 import { useProductsQuery, useCartQuery } from '../utils/auth';
-import { SyncLoader } from 'react-spinners';
+import Loader from './Loader';
+import { contextStore } from '../context';
 
 const Dashboard = () => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const { data: cart } = useCartQuery();
-    const { data: products, isLoading, isError } = useProductsQuery();
+    const { data: products, isLoading, isFetched } = useProductsQuery();
+    const { setLoader } = contextStore();
 
     useEffect(() => {
         if (!isLoading) {
@@ -19,26 +21,8 @@ const Dashboard = () => {
         }
     }, [searchTerm, products]);
 
-    if (isLoading) {
-        return (
-            <div
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100vw',
-                    height: '100vh',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    zIndex: 9999,
-                }}
-            >
-                <SyncLoader color="#ffffff" size={60} />
-            </div>
-        );
-    }
+    if (isLoading) setLoader(true);
+    else setLoader(false);
 
     return (
         <>

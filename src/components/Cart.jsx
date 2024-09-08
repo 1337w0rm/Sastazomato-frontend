@@ -1,10 +1,12 @@
 import CartItem from './CartItem';
 import { Link } from 'react-router-dom';
 import { useCartQuery } from '../utils/auth';
+import { contextStore } from '../context';
 const Cart = () => {
     const { data: cart, isLoading } = useCartQuery();
-
-    if (isLoading) return <div>Loading...</div>;
+    const { setLoader } = contextStore();
+    if (isLoading) setLoader(true);
+    else setLoader(false);
 
     const itemTotalCost = cart.items.reduce((totalCost, item) => {
         return totalCost + item.product.discountedPrice * item.quantity;

@@ -49,7 +49,6 @@ export const useAuthQuery = () => {
     return useQuery({
         queryKey: ['isAuthenticated'],
         queryFn: checkAuth,
-        staleTime: 0,
     });
 };
 

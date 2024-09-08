@@ -7,7 +7,6 @@ const addToCart = async (id) => {
         const response = await axios.post('/cart/add', { id });
         const message = response.data.message;
         notify('success', message);
-        return response.data;
     } catch (err) {
         const message = err.response.data.error;
         notify('error', message);

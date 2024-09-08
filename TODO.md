@@ -4,12 +4,12 @@
 -   [ ] Add Orders Page
 -   [ ] Fix status api being called multiple times
 -   [ ] Complete order flow
--   [ ] Add toast when adding items to cart from main page
 
 ### In Progress
 
 ### Done ✓
 
+-   [x] Add toast when adding items to cart from main page
 -   [x] Add Loader when API is being called
 -   [x] Add Link to Hero Icon and Home Button
 -   [x] Fix the cart item number alignment

@@ -9,7 +9,7 @@ const Dashboard = () => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const { data: cart } = useCartQuery();
-    const { data: products, isLoading, isFetched } = useProductsQuery();
+    const { data: products, isLoading } = useProductsQuery();
     const { setLoader } = contextStore();
 
     useEffect(() => {

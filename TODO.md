@@ -4,6 +4,7 @@
 -   [ ] Add Orders Page
 -   [ ] Fix status api being called multiple times
 -   [ ] Complete order flow
+-   [ ] When already logged in Login Page should not show at start
 
 ### In Progress
 

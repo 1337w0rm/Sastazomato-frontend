@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAuthQuery } from '../utils/auth';
+import { useAuthQuery } from '../utils/userAPI';
 import { useState } from 'react';
 import ProfileUpdateModal from './ProfileUpdateModal';
 const ProfilePage = () => {

@@ -1,13 +1,7 @@
-import {
-    useState,
-    createContext,
-    useContext,
-    useEffect,
-    useReducer,
-} from 'react';
+import { useState, createContext, useContext } from 'react';
 const Context = createContext();
 import axios from 'axios';
-import { useAuthQuery } from '../utils/auth';
+import { useAuthQuery } from '../utils/userAPI';
 
 const ContextProvider = ({ children }) => {
     const [loader, setLoader] = useState(false);

@@ -31,8 +31,13 @@ const getProducts = async () => {
     return response.data;
 };
 
-export const getCart = async () => {
+const getCart = async () => {
     const response = await axios.get('/cart');
+    return response.data;
+};
+
+const updateUser = async (data) => {
+    const response = await axios.put('/user/update', data);
     return response.data;
 };
 
@@ -61,6 +66,17 @@ export const useLoginMutation = () => {
 export const userRegisterMutation = () => {
     return useMutation(register, {
         onSuccess: (data) => notify('success', data.message),
+        onError: (err) => notify('error', err.response.data.error),
+    });
+};
+
+export const userUpdateMutation = () => {
+    const queryClient = useQueryClient();
+    return useMutation(updateUser, {
+        onSuccess: (data) => {
+            notify('success', data.message);
+            queryClient.invalidateQueries({ queryKey: ['user'] });
+        },
         onError: (err) => notify('error', err.response.data.error),
     });
 };

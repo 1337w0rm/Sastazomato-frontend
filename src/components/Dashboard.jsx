@@ -1,7 +1,7 @@
 import ProductsContainer from './Products';
 import Search from './Search';
 import { useEffect, useState } from 'react';
-import { useProductsQuery, useCartQuery } from '../utils/auth';
+import { useProductsQuery, useCartQuery } from '../utils/userAPI';
 import Loader from './Loader';
 import { contextStore } from '../context';
 

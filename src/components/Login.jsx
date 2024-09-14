@@ -3,7 +3,7 @@ import {
     useAuthQuery,
     useLoginMutation,
     userRegisterMutation,
-} from '../utils/auth';
+} from '../utils/userAPI';
 import { Navigate } from 'react-router-dom';
 
 const Login = () => {

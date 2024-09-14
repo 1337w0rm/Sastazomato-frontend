@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useAuthQuery } from '../utils/auth';
+import { useAuthQuery } from '../utils/userAPI';
 import { contextStore } from '../context';
 
 const Protected = ({ element }) => {

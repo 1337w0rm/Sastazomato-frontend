@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { userLogoutMutation } from '../utils/auth';
+import { userLogoutMutation } from '../utils/userAPI';
 import { Link, useNavigate } from 'react-router-dom';
 const ProfileNav = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);

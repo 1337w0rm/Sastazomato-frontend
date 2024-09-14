@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { userUpdateMutation } from '../utils/userAPI';
 
 const ProfileUpdateModal = ({ isOpen, onClose, currentUser }) => {
+    const updateMutation = userUpdateMutation();
     const [formData, setFormData] = useState({
         name: currentUser.name || '',
         email: currentUser.email || '',
@@ -26,8 +28,8 @@ const ProfileUpdateModal = ({ isOpen, onClose, currentUser }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you would typically send the formData to your backend
         console.log('Form submitted:', formData);
+        updateMutation.mutateAsync(formData);
         onClose();
     };
 

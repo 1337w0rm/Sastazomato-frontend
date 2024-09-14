@@ -1,6 +1,6 @@
 import CartItem from './CartItem';
 import { Link } from 'react-router-dom';
-import { useCartQuery } from '../utils/auth';
+import { useCartQuery } from '../utils/userAPI';
 import { contextStore } from '../context';
 const Cart = () => {
     const { data: cart, isLoading } = useCartQuery();

@@ -5,85 +5,88 @@ import { contextStore } from '../context';
 const Cart = () => {
     const { data: cart, isLoading } = useCartQuery();
 
+    if (!cart) return null;
+
     const itemTotalCost = cart.items.reduce((totalCost, item) => {
         return totalCost + item.product.discountedPrice * item.quantity;
     }, 0);
 
     return (
-        <div className="container mx-auto mt-10">
-            <div className="rounded-md sm:flex shadow-md my-10">
-                <div className="  w-full  sm:w-3/4 bg-white px-10 py-10">
-                    <div className="flex justify-between border-b pb-8">
-                        <h1 className="font-semibold text-2xl">
-                            Shopping Cart
-                        </h1>
-                        <h2 className="font-semibold text-2xl">
-                            {cart.items.length} Items
-                        </h2>
-                    </div>
-                    {cart.items.map((item) => (
-                        <CartItem key={item._id} item={item} />
-                    ))}
-                    <Link
-                        to="/"
-                        className="flex font-semibold text-indigo-600 text-sm mt-10"
-                    >
-                        <svg
-                            className="fill-current mr-2 text-indigo-600 w-4"
-                            viewBox="0 0 448 512"
-                        >
-                            <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
-                        </svg>
-                        Continue Shopping
-                    </Link>
-                </div>
-                <div
-                    id="summary"
-                    className=" w-full   sm:w-1/4   md:w-1/2     px-8 py-10"
+        <div className="container mx-auto p-4 font-sans">
+            <Link
+                to="/"
+                className="flex items-center text-blue-600 hover:text-blue-800 mb-6 transition duration-300 ease-in-out"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
                 >
-                    <h1 className="font-semibold text-2xl border-b pb-8">
-                        Order Summary
-                    </h1>
-                    <div className="flex justify-between mt-10 mb-5">
-                        <span className="font-semibold text-sm uppercase">
-                            Items {cart.items.length}
+                    <path
+                        fillRule="evenodd"
+                        d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                        clipRule="evenodd"
+                    />
+                </svg>
+                Back to Home
+            </Link>
+            <div className="flex flex-col lg:flex-row gap-8">
+                <div className="lg:w-2/3">
+                    <div className="flex justify-between items-center mb-6">
+                        <h1 className="text-2xl font-bold">Shopping Cart</h1>
+                        <span className="text-lg">
+                            {cart.items.length} Items
                         </span>
-                        <span className="font-semibold text-sm">
-                            Rs. {itemTotalCost}
-                        </span>
                     </div>
-                    <div>
-                        <label className="font-medium inline-block mb-3 text-sm uppercase">
-                            Shipping
-                        </label>
-                        <select className="block p-2 text-gray-600 w-full text-sm">
-                            <option>Standard shipping - Rs. 40</option>
-                        </select>
+                    <div className="space-y-6">
+                        {cart.items.map((item) => (
+                            <CartItem key={item._id} item={item} />
+                        ))}
                     </div>
-                    <div className="py-10">
-                        <label
-                            htmlFor="promo"
-                            className="font-semibold inline-block mb-3 text-sm uppercase"
-                        >
-                            Promo Code
-                        </label>
-                        <input
-                            type="text"
-                            id="promo"
-                            placeholder="Enter your code"
-                            className="p-2 text-sm w-full"
-                        />
-                    </div>
-                    <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">
-                        Apply
-                    </button>
-                    <div className="border-t mt-8">
-                        <div className="flex font-semibold justify-between py-6 text-sm uppercase">
-                            <span>Total cost</span>
-                            <span>Rs. {itemTotalCost + 40}</span>
-                        </div>
-                        <div className="mb-4 max-w-sm mx-auto mt-20">
-                            <button className="flex flex-row items-center justify-center w-full px-4 py-4 mb-4 text-sm font-bold bg-green-300 leading-6 capitalize duration-100 transform rounded-sm shadow cursor-pointer focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 focus:outline-none sm:mb-0 sm:w-auto sm:mr-4 md:pl-8 md:pr-6 xl:pl-12 xl:pr-10 hover:shadow-lg hover:-translate-y-1">
+                </div>
+                <div className="lg:w-1/3">
+                    <div className="bg-white p-6 rounded-lg shadow">
+                        <h2 className="text-xl font-bold mb-4">
+                            Order Summary
+                        </h2>
+                        <div className="space-y-4">
+                            <div className="flex justify-between">
+                                <span>ITEMS {cart.items.length}</span>
+                                <span className="font-semibold">
+                                    Rs. {itemTotalCost}
+                                </span>
+                            </div>
+                            <div>
+                                <p className="mb-2">SHIPPING</p>
+                                <select className="w-full border rounded px-3 py-2 text-sm">
+                                    <option>Standard shipping - Rs. 40</option>
+                                </select>
+                            </div>
+                            <div>
+                                <p className="mb-2">PROMO CODE</p>
+                                <div className="flex space-x-2">
+                                    <input
+                                        type="text"
+                                        placeholder="Enter your code"
+                                        className="flex-grow border rounded px-3 py-2 text-sm"
+                                    />
+                                    <button className="bg-red-500 text-white px-4 py-2 rounded text-sm">
+                                        APPLY
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="border-t pt-4 mt-4">
+                                <div className="flex justify-between">
+                                    <span className="font-semibold">
+                                        TOTAL COST
+                                    </span>
+                                    <span className="font-bold">
+                                        RS. {itemTotalCost + 40}
+                                    </span>
+                                </div>
+                            </div>
+                            <button className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold mt-4">
                                 Checkout
                             </button>
                         </div>

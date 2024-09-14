@@ -97,6 +97,6 @@ export const useCartQuery = () => {
     return useQuery({
         queryKey: ['cart'],
         queryFn: getCart,
-        staleTime: Infinity,
+        staleTime: 5000,
     });
 };

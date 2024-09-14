@@ -15,9 +15,9 @@ const register = async (data) => {
 const checkAuth = async () => {
     try {
         const response = await axios.get('/user/status');
-        return response.data.isAuthenticated;
+        return response.data;
     } catch (err) {
-        return err.response.data.isAuthenticated;
+        return err.response.data;
     }
 };
 
@@ -43,7 +43,7 @@ export const useLoginMutation = () => {
             queryClient.setQueryData(['user'], data.user);
             notify('success', data.message);
             queryClient.invalidateQueries({
-                queryKey: ['isAuthenticated'],
+                queryKey: ['user'],
             });
             queryClient.prefetchQuery({
                 queryKey: ['cart'],
@@ -70,7 +70,7 @@ export const userLogoutMutation = () => {
     return useMutation(logout, {
         onSuccess: (data) => {
             notify('success', data.message);
-            queryClient.invalidateQueries({ queryKey: ['isAuthenticated'] });
+            queryClient.invalidateQueries({ queryKey: ['user'] });
         },
         onError: (err) => notify('error', err.response.data.error),
     });
@@ -78,7 +78,7 @@ export const userLogoutMutation = () => {
 
 export const useAuthQuery = () => {
     return useQuery({
-        queryKey: ['isAuthenticated'],
+        queryKey: ['user'],
         queryFn: checkAuth,
         staleTime: 500,
         retry: 0,

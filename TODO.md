@@ -1,11 +1,14 @@
 ### Todo
 
 -   [ ] Add Hamburger Icon on Mobile View
--   [ ] Add Profile Page
 -   [ ] Add Orders Page
 -   [ ] Complete order flow
 
 ### In Progress
+
+-   [ ] Add Profile Page
+    -   [ ] Create API to update profile
+    -   [ ] Integrate API with frontend
 
 ### Done ✓
 

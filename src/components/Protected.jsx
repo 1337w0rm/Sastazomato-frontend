@@ -3,9 +3,9 @@ import { useAuthQuery } from '../utils/auth';
 import { contextStore } from '../context';
 
 const Protected = ({ element }) => {
-    const { data: isAuthenticated, isLoading } = useAuthQuery();
+    const { data: user, isLoading } = useAuthQuery();
     if (isLoading) return null;
-    return isAuthenticated ? element : <Navigate to="/login" />;
+    return user.isAuthenticated ? element : <Navigate to="/login" />;
 };
 
 export default Protected;

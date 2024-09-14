@@ -5,6 +5,7 @@ import ErrorPage from './errorPage';
 import Login from './components/Login';
 import Cart from './components/Cart';
 import Protected from './components/Protected';
+import ProfilePage from './components/Profile';
 
 const router = createBrowserRouter([
     {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
                 element: <Login />,
             },
             { path: 'cart', element: <Protected element={<Cart />} /> },
+            {
+                path: 'profile',
+                element: <Protected element={<ProfilePage />} />,
+            },
         ],
         errorElement: <ErrorPage />,
     },

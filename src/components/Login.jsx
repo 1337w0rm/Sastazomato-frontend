@@ -4,16 +4,13 @@ import {
     useLoginMutation,
     userRegisterMutation,
 } from '../utils/auth';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
+import { Navigate } from 'react-router-dom';
 
 const Login = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const queryClient = useQueryClient();
-    const { data: isAuthenticated } = useAuthQuery();
-    const navigate = useNavigate();
+    const { data: user } = useAuthQuery();
     const loginMutation = useLoginMutation();
     const registerMutation = userRegisterMutation();
 
@@ -37,7 +34,7 @@ const Login = () => {
 
     return (
         <>
-            {isAuthenticated ? (
+            {user.isAuthenticated ? (
                 <Navigate to="/" />
             ) : (
                 <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

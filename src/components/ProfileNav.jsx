@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { userLogoutMutation } from '../utils/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const ProfileNav = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const logoutMutation = userLogoutMutation();
@@ -36,18 +36,13 @@ const ProfileNav = () => {
 
             {isModalOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
-                    <a
+                    <Link
+                        to="/profile"
                         href="#profile"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                         Profile
-                    </a>
-                    <a
-                        href="#orders"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                        Orders
-                    </a>
+                    </Link>
                     <a
                         href="#logout"
                         onClick={logoutHandler}

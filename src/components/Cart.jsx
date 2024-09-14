@@ -4,9 +4,6 @@ import { useCartQuery } from '../utils/auth';
 import { contextStore } from '../context';
 const Cart = () => {
     const { data: cart, isLoading } = useCartQuery();
-    const { setLoader } = contextStore();
-    if (isLoading) setLoader(true);
-    else setLoader(false);
 
     const itemTotalCost = cart.items.reduce((totalCost, item) => {
         return totalCost + item.product.discountedPrice * item.quantity;

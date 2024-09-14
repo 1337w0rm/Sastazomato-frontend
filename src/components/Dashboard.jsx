@@ -10,7 +10,6 @@ const Dashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const { data: cart } = useCartQuery();
     const { data: products, isLoading } = useProductsQuery();
-    const { setLoader } = contextStore();
 
     useEffect(() => {
         if (!isLoading) {
@@ -20,9 +19,6 @@ const Dashboard = () => {
             setFilteredProducts(result);
         }
     }, [searchTerm, products]);
-
-    if (isLoading) setLoader(true);
-    else setLoader(false);
 
     return (
         <>

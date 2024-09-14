@@ -10,7 +10,6 @@ const Card = ({ product, cart }) => {
     const addToCartMutation = useAddToCartMutation();
     const deleteFromCartMutation = useDeleteFromCartMutation();
     const { name, brand, discountedPrice, originalPrice, img } = product;
-    const { setLoader } = contextStore();
     const itemInCart =
         cart?.items.find((item) => item.product.id === product.id) || false;
 
@@ -21,9 +20,6 @@ const Card = ({ product, cart }) => {
             deleteFromCartMutation.mutate(product.id);
         }
     };
-
-    if (addToCartMutation.isLoading) setLoader(true);
-    if (deleteFromCartMutation.isLoading) setLoader(true);
 
     return (
         <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">

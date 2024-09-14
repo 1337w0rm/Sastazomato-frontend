@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
-import Dashboard from './components/Dashboard';
+import Home from './components/Home';
 import ErrorPage from './errorPage';
 import Login from './components/Login';
 import Cart from './components/Cart';
@@ -11,7 +11,7 @@ const router = createBrowserRouter([
         path: '/',
         element: <App />,
         children: [
-            { index: true, element: <Protected element={<Dashboard />} /> },
+            { index: true, element: <Protected element={<Home />} /> },
             {
                 path: 'login',
                 element: <Login />,

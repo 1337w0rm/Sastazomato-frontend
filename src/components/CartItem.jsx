@@ -5,13 +5,8 @@ import {
 } from '../utils/cartAPI';
 const CartItem = ({ item }) => {
     const { product, quantity } = item;
-    const { setLoader } = contextStore();
     const deleteFromCartMutation = useDeleteFromCartMutation();
     const updateCartQuantityMutation = useCartQuantityUpdateMutation();
-
-    if (deleteFromCartMutation.isLoading) setLoader(true);
-
-    if (updateCartQuantityMutation.isLoading) setLoader(true);
 
     return (
         <div className="md:flex items-strech py-8 md:py-10 lg:py-8 border-t border-gray-50">

@@ -13,8 +13,17 @@ const register = async (data) => {
 };
 
 const checkAuth = async () => {
-    const response = await axios.get('/user/status');
-    return response.data.isAuthenticated;
+    try {
+        const response = await axios.get('/user/status');
+        return response.data.isAuthenticated;
+    } catch (err) {
+        return err.response.data.isAuthenticated;
+    }
+};
+
+const logout = async () => {
+    const response = await axios.post('/user/logout', {});
+    return response.data;
 };
 
 const getProducts = async () => {
@@ -33,6 +42,17 @@ export const useLoginMutation = () => {
         onSuccess: (data) => {
             queryClient.setQueryData(['user'], data.user);
             notify('success', data.message);
+            queryClient.invalidateQueries({
+                queryKey: ['isAuthenticated'],
+            });
+            queryClient.prefetchQuery({
+                queryKey: ['cart'],
+                queryFn: getCart,
+            });
+            queryClient.prefetchQuery({
+                queryKey: ['products'],
+                queryFn: getProducts,
+            });
         },
         onError: (err) => notify('error', err.response.data.error),
     });
@@ -45,10 +65,22 @@ export const userRegisterMutation = () => {
     });
 };
 
+export const userLogoutMutation = () => {
+    const queryClient = useQueryClient();
+    return useMutation(logout, {
+        onSuccess: (data) => {
+            notify('success', data.message);
+            queryClient.invalidateQueries({ queryKey: ['isAuthenticated'] });
+        },
+        onError: (err) => notify('error', err.response.data.error),
+    });
+};
+
 export const useAuthQuery = () => {
     return useQuery({
         queryKey: ['isAuthenticated'],
         queryFn: checkAuth,
+        staleTime: 500,
         retry: 0,
     });
 };
@@ -57,7 +89,7 @@ export const useProductsQuery = () => {
     return useQuery({
         queryKey: ['products'],
         queryFn: getProducts,
-        staleTime: Infinity,
+        staleTime: 3000,
     });
 };
 

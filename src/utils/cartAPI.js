@@ -1,6 +1,6 @@
 import axios from 'axios';
 import notify from './notify';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const addToCart = async (id) => {
     try {

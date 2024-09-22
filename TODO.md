@@ -6,12 +6,11 @@
 
 ### In Progress
 
--   [ ] Add Profile Page
-    -   [ ] Create API to update profile
-    -   [ ] Integrate API with frontend
-
 ### Done ✓
 
+-   [x] Add Profile Page
+    -   [x] Create API to update profile
+    -   [x] Integrate API with frontend
 -   [x] When already logged in Login Page should not show at start
 -   [x] Fix status api being called multiple times
 -   [x] Add toast when adding items to cart from main page

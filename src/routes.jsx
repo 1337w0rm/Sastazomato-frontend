@@ -4,8 +4,10 @@ import Home from './components/Home';
 import ErrorPage from './errorPage';
 import Login from './components/Login';
 import Cart from './components/Cart';
+import Orders from './components/Orders';
 import Protected from './components/Protected';
 import ProfilePage from './components/Profile';
+import OrderPlaced from './components/OrderPlaced';
 
 const router = createBrowserRouter([
     {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
             {
                 path: 'profile',
                 element: <Protected element={<ProfilePage />} />,
+            },
+            {
+                path: 'orderplaced',
+                element: <Protected element={<OrderPlaced />} />,
+            },
+            {
+                path: 'orders',
+                element: <Protected element={<Orders />} />,
             },
         ],
         errorElement: <ErrorPage />,

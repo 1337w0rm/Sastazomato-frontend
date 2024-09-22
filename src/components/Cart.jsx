@@ -1,12 +1,27 @@
 import CartItem from './CartItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCartQuery } from '../utils/userAPI';
-import { contextStore } from '../context';
+import notify from '../utils/notify';
+import { usePlacedOrderMutation } from '../utils/orderAPI';
+
 const Cart = () => {
-    const { data: cart, isLoading } = useCartQuery();
+    const { data: cart } = useCartQuery();
+    const navigate = useNavigate();
 
     if (!cart) return null;
 
+    const placedOrderMutation = usePlacedOrderMutation();
+
+    if (placedOrderMutation.isSuccess) navigate('/orderplaced');
+    const handleOrderPlaced = (event) => {
+        if (cart.items.length === 0) {
+            event.preventDefault();
+            notify('error', 'Cart is empty');
+            return;
+        }
+
+        placedOrderMutation.mutate();
+    };
     const itemTotalCost = cart.items.reduce((totalCost, item) => {
         return totalCost + item.product.discountedPrice * item.quantity;
     }, 0);
@@ -60,7 +75,7 @@ const Cart = () => {
                             <div>
                                 <p className="mb-2">SHIPPING</p>
                                 <select className="w-full border rounded px-3 py-2 text-sm">
-                                    <option>Standard shipping - Rs. 40</option>
+                                    <option>Free Shipping</option>
                                 </select>
                             </div>
                             <div>
@@ -86,7 +101,10 @@ const Cart = () => {
                                     </span>
                                 </div>
                             </div>
-                            <button className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold mt-4">
+                            <button
+                                onClick={handleOrderPlaced}
+                                className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold mt-4"
+                            >
                                 Checkout
                             </button>
                         </div>

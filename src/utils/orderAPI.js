@@ -20,11 +20,13 @@ const getOrders = async () => {
     }
 };
 
-export const usePlacedOrderMutation = () => {
+export const usePlacedOrderMutation = (navigate) => {
     const queryClient = useQueryClient();
     return useMutation(placeOrder, {
         onSuccess: (data) => {
             queryClient.setQueryData(['lastOrder'], () => data.order);
+            queryClient.invalidateQueries(['orders']);
+            navigate('/orderplaced');
         },
     });
 };
@@ -33,6 +35,5 @@ export const useGetOrderQuery = () => {
     return useQuery({
         queryKey: ['orders'],
         queryFn: getOrders,
-        staleTime: 0,
     });
 };

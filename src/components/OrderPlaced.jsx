@@ -1,9 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
+import { useGetOrderQuery } from '../utils/orderAPI';
 export default function OrderPlaced() {
-    const queryClient = useQueryClient();
-    const orderDetails = queryClient.getQueryData(['lastOrder']);
+    const { data, isLoading } = useGetOrderQuery();
 
+    if (isLoading) return null;
+    const orderDetails = data.orders[0];
     const orderDate = new Date(orderDetails.orderDate);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = orderDate.toLocaleString('en-US', options);
@@ -54,22 +56,31 @@ export default function OrderPlaced() {
                     <ul>
                         {orderDetails.items.map((item, index) => (
                             <li
-                                key={index}
+                                key={item._id}
                                 className="flex justify-between mb-2"
                             >
                                 <span>
                                     {item.product.name} (x{item.quantity})
                                 </span>
-                                <span>{item.product.discountedPrice}</span>
+                                <span>
+                                    {item.product.price * item.quantity}
+                                </span>
                             </li>
                         ))}
                     </ul>
                 </div>
-                <Link to="/orders">
-                    <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out">
-                        View All Orders
-                    </button>
-                </Link>
+                <div className="flex flex-col space-y-3">
+                    <Link to="/orders">
+                        <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out">
+                            View All Orders
+                        </button>
+                    </Link>
+                    <Link to="/">
+                        <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out">
+                            Back to Home
+                        </button>
+                    </Link>
+                </div>
             </div>
         </div>
     );

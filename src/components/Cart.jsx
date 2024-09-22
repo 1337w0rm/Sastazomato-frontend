@@ -6,21 +6,18 @@ import { usePlacedOrderMutation } from '../utils/orderAPI';
 
 const Cart = () => {
     const { data: cart } = useCartQuery();
-    const navigate = useNavigate();
-
     if (!cart) return null;
+    const navigate = useNavigate();
+    const placeOrderMutation = usePlacedOrderMutation(navigate);
 
-    const placedOrderMutation = usePlacedOrderMutation();
-
-    if (placedOrderMutation.isSuccess) navigate('/orderplaced');
     const handleOrderPlaced = (event) => {
+        event.preventDefault();
         if (cart.items.length === 0) {
-            event.preventDefault();
             notify('error', 'Cart is empty');
             return;
         }
 
-        placedOrderMutation.mutate();
+        placeOrderMutation.mutateAsync();
     };
     const itemTotalCost = cart.items.reduce((totalCost, item) => {
         return totalCost + item.product.discountedPrice * item.quantity;
@@ -101,6 +98,7 @@ const Cart = () => {
                                     </span>
                                 </div>
                             </div>
+
                             <button
                                 onClick={handleOrderPlaced}
                                 className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold mt-4"

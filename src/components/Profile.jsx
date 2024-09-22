@@ -2,12 +2,22 @@ import { Link } from 'react-router-dom';
 import { useAuthQuery } from '../utils/userAPI';
 import { useState } from 'react';
 import ProfileUpdateModal from './ProfileUpdateModal';
+import { useGetOrderQuery } from '../utils/orderAPI';
 const ProfilePage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
     const { data } = useAuthQuery();
+    const { data: ordersData, isLoading } = useGetOrderQuery();
+
+    if (isLoading) return null;
+
+    const orders = ordersData.orders.filter((order, index) => {
+        if (index < 3) return order;
+    });
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const user = data.user;
     return (
         <div className="container mx-auto px-4 py-8">
@@ -103,28 +113,31 @@ const ProfilePage = () => {
                                 Recent Orders
                             </h2>
                             <div className="space-y-4">
-                                {[1, 2, 3].map((order) => (
+                                {orders.map((order) => (
                                     <div
-                                        key={order}
+                                        key={order.orderId}
                                         className="border rounded-lg p-4 flex justify-between items-center"
                                     >
                                         <div>
                                             <p className="font-medium">
-                                                Order #{1000 + order}
+                                                Order #{order.orderId}
                                             </p>
                                             <p className="text-sm text-gray-600">
-                                                2 items • $24.99
+                                                {order.items.length} Items • Rs
+                                                {order.totalAmount}
                                             </p>
                                         </div>
                                         <span className="text-sm text-green-600 font-medium">
-                                            Delivered
+                                            {order.status}
                                         </span>
                                     </div>
                                 ))}
                             </div>
-                            <button className="mt-4 text-orange-500 font-medium hover:underline">
-                                View all orders
-                            </button>
+                            <Link to="/orders">
+                                <button className="mt-4 text-orange-500 font-medium hover:underline">
+                                    View all orders
+                                </button>
+                            </Link>
                         </section>
                         <ProfileUpdateModal
                             isOpen={isModalOpen}
